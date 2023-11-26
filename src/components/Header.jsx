@@ -5,15 +5,14 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <Navbar className="bg-dark">
-        <Container>
-          <Navbar.Brand>
-            <Link to={'/'} style={{textDecoration:'none', color:'white', fontSize:'30px'}}>
-            <i class="fa-solid fa-bounce fa-utensils me-4 text-warning"></i>{' '}
-            The Tasty Palette  </Link>
-          </Navbar.Brand>
-        </Container>
-      </Navbar>
+    <Navbar style={{backgroundColor:"black"}} >
+            <Container>
+                <Navbar.Brand >
+                    <Link to={'/'} style={{ textDecoration: "none", color: 'white', fontSize: '30px',fontWeight:"bolder" }}> <i style={{color:"white"}} class="fa-solid fa-utensils "></i>{' '}
+                    The Tasty Palette</Link>
+                </Navbar.Brand>            
+            </Container>
+  </Navbar>
   )
 }
 
