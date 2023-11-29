@@ -4,6 +4,10 @@ import View from '../components/View'
 
 function Home() {
     const [uploadStatusRecipe,setUploadStatusRecipe] = useState({})
+
+
+
+    
     return (
         <>
       <div className='bg-wheat align-items-center ' style={{backgroundColor:'white',padding:'20px' }}>
@@ -21,12 +25,17 @@ function Home() {
                   </div>
               </div>
               </div>
-              <div className='container-fluid  mt-5  mb-5 d-flex justify-content-center' style={{marginLeft:'78px',width:'1130px'}}>
-                 <div className='all-videos col-lg-12'>
-                    <h3 className='mb-5 ms-5 text-danger text-center fw-bold fs-2' >ALL RECEPIES</h3>
-                      <View uploadStatusRecipe={uploadStatusRecipe}/>
-                 </div>
+
+              <div className='container mt-5 rounded'  >
+              <div className="row d-flex justify-content-center align-items-center">    
+              <h3 className='mb-5 ms-5 text-danger text-center fw-bold fs-2' >ALL RECEPIES</h3>
+                      <View   uploadStatusRecipe={uploadStatusRecipe}/> 
+                  </div>
               </div>
+           
+
+
+             
       </div>
   </>
     )

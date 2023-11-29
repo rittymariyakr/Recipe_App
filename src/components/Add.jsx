@@ -17,8 +17,8 @@ function Add({setUploadStatusRecipe}) {
         caption: "",
         url: "",
         description: "",
-        embedLink: "",
-        Comment:""
+        embedLink: ""
+       
     })
     // console.log(Recipes);
 

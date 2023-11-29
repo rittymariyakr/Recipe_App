@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ViewCard from './ViewCard'
-import { Row} from 'react-bootstrap'
+import {  Row} from 'react-bootstrap'
 import { getAllRecipes } from '../services/allAPI'
 
 function View({uploadStatusRecipe}) {
+
+  const [uploadCommentStatus,setUploadCommentStatus] = useState({})
+
 
   const [allRecipes,setAllRecipes] = useState([])
 
@@ -16,6 +19,7 @@ const getAllUploadedRecipes =async()=>{
   const {data} = response
   // console.log(data);
   setAllRecipes(data)
+  
 }
 console.log(allRecipes);
 
@@ -23,21 +27,24 @@ console.log(allRecipes);
 useEffect(()=>{
   getAllUploadedRecipes()
   setDeleteRecipeStatus(false)
-},[uploadStatusRecipe,deleteRecipeStatus])
+},[uploadStatusRecipe,uploadCommentStatus, deleteRecipeStatus])
 
   return (
     <>
-      <Row>
+   <Row>
+     
         {allRecipes.length>0?
           allRecipes.map((recipe)=>(
            
-         <ViewCard  displayRecipe ={recipe} setDeleteRecipeStatus={setDeleteRecipeStatus}/>
+         <ViewCard  setUploadCommentStatus={setUploadCommentStatus}  displayRecipe ={recipe} setDeleteRecipeStatus={setDeleteRecipeStatus}/>
         
           ))
           :
 
         <p>Nothing to display</p>
        }
+     
+      
      </Row>
   </>
   )

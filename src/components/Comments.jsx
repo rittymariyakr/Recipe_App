@@ -3,52 +3,61 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { updateComment } from '../services/allAPI';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Comments({displayRecipe}) {
+function Comments({ displayRecipe,setUploadCommentStatus }) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-   
- 
+
+
     const [uploadCommment, setUploadComment] = useState("")
-    console.log(uploadCommment);
+    // console.log(uploadCommment);
 
-    console.log(displayRecipe);
+    // console.log(displayRecipe);
 
- const handleUploadComment = async ()=>{
-    
-        const {id} =displayRecipe
-        console.log(id);
-        
-       
 
-            let body = {
-                Comment:""
-            }
-            
-           const response = await updateComment(body)
-           console.log(response);
-           if(response.status >= 200 && response.status <300){
+    const handleUploadComment = async () => {
 
-        
-                          
-                alert('Recipe Uploaded Successfully')
+        const { id } = displayRecipe
+        // console.log(id);
+        console.log(uploadCommment);
+
+        let body = {
+            //  displayRecipe,
+            ...displayRecipe, Comment: uploadCommment
+
+        }
+
+
+        if (!uploadCommment) {
+            toast.error("Enter Comment")
+        }
+        else {
+            const response = await updateComment(id, body)
+            console.log(response);
+            if (response.status >= 200 && response.status < 300) {
+                setUploadCommentStatus(response.data)
+                // displayRecipe.comment=uploadCommment
+                toast.success('Thank You For Your Comment')
                 handleClose()
             }
-            else{
-                alert('Oops!.. Something went wrong.')
+            else {
+                toast.warning('Oops!.. Something went wrong.')
             }
+        }
     }
-  return (
-    
-    <>
-    <div className='d-flex'>
-        <div className='p-1 bg-warning  rounded' style={{color:'black'}}>Leave Your Comment         <button onClick={handleShow} className='btn btn-outline-light ms-3'><i class="fa-solid fa-plus "></i></button>
-</div>
-    {/* <i class="fa-solid fa-comment fa-2x"></i> */}
-      
-    </div>
-    <Modal
+    return (
+
+        <>
+            <div className='d-flex ms-4' >
+                <div className='p-1 bg-warning rounded' style={{ color: 'black' ,marginLeft:'65px'}}>Leave Your Comment <button onClick={handleShow} className='btn btn-outline-light ms-3'><i class="fa-solid fa-plus "></i></button>
+                </div>
+                {/* <i class="fa-solid fa-comment fa-2x"></i> */}
+
+            </div>
+            <Modal
                 show={show}
                 onHide={handleClose}
                 backdrop="static"
@@ -63,13 +72,13 @@ function Comments({displayRecipe}) {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                           
-                            <Form.Control  onChange={(e)=>setUploadComment(e.target.value)}
+
+                            <Form.Control onChange={(e) => setUploadComment(e.target.value)}
                                 type="text"
                                 placeholder="Your Comment"
                             />
                         </Form.Group>
-                        
+
                     </Form>
 
                 </Modal.Body>
@@ -80,9 +89,11 @@ function Comments({displayRecipe}) {
                     <Button onClick={handleUploadComment} variant="warning">Upload</Button>
                 </Modal.Footer>
             </Modal>
+            <ToastContainer position='top-center' theme='colored' autoClose={2000} />
 
-    </>
-  )
+
+        </>
+    )
 }
 
 export default Comments

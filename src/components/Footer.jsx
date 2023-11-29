@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './Footer.css'
+
 
 function Footer() {
   return (
@@ -17,14 +19,14 @@ function Footer() {
         <Link style={{color:'black',fontSize:'20px',fontWeight:'bold'}}><i class="fa-brands fa-youtube"></i></Link>
         </div>
         </div>
-        <div className='w-75 p-5 d-flex align-items-center justify-content-around'>
+        <div className='links w-75 p-5 d-flex align-items-center justify-content-around'>
           <h3 style={{color:'white'}}>The Tasty Pallete</h3>
            <Link to={'/'} style={{textDecoration:'none'}}><h5 style={{color:'white'}}>About Us</h5></Link>
          <Link to={'/home'} style={{textDecoration:'none'}}>  <h5 style={{color:'white'}}>Our Recipes</h5></Link>
           <Link style={{textDecoration:'none'}}> <h5 style={{color:'white'}}>Advertise</h5></Link>
            <Link style={{textDecoration:'none'}}><h5 style={{color:'white'}}>Terms of Service</h5></Link>
         </div>
-        <p className='text-light'>Copyright &copy; 2023 Recipe app Built with react.</p>
+        <p className=' text-light' style={{marginBottom:'80px'}}>Copyright &copy; 2023 Recipe app Built with react.</p>
 
 </div>
     

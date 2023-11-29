@@ -8,7 +8,8 @@ import Card from 'react-bootstrap/Card';
 import Collapse from 'react-bootstrap/Collapse';
 
 
-function ViewCard({displayRecipe,setDeleteRecipeStatus}) {
+
+function ViewCard({displayRecipe,setDeleteRecipeStatus,setUploadCommentStatus}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -17,34 +18,61 @@ function ViewCard({displayRecipe,setDeleteRecipeStatus}) {
   const [open, setOpen] = useState(false);
 
 
+  const [show2, setShow2] = useState(false);
+
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => setShow2(true);
+
+
   // remove recipe
   const removeRecipe = async(id)=>{
     const response = await deleteARecipe(id)
     setDeleteRecipeStatus(true)
+
   }
+  
   return (
     <>
-      <div class="card mb-3 shadow ms-2" style={{backgroundColor:'black',color:'white',height:'340px'}}>
-    <div class="row g-0">
-      <div class="col-md-4">
+    <div class=" container-fluid card mb-5 shadow" style={{backgroundColor:'black',color:'white',width:'100%',height:'490px'}}>
+    <div class="row">
+      <div class="col-md-4 mt-5 text-center ">
         <img  width={'280px'} height={'250px'} src={displayRecipe.url} class="" alt="..."/>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 mt-5 ">
         <div class="card-body">
           <h4 class="card-title text-warning fw-bolder">{displayRecipe.caption}</h4>
           <h5>How to Cook :</h5>
-          <p class="card-text">{displayRecipe.description}</p>
+          <p  class="card-text">{displayRecipe.description.slice(0  ,200)}....  <a href='#' onClick={handleShow2} className='ms-1 ' style={{backgroundColor:'black',color:'white'}}>read more</a></p>
           <div className=' d-flex align-items-center justify-content-between p-2 rounded ms-3'>
          
           <button className='btn btn-outline-light' onClick={handleShow}><i class="fa-brands fa-youtube  text-danger fa-2x"></i></button>
 
-          <Comments displayRecipe={displayRecipe}/>
+          <Comments setUploadCommentStatus={setUploadCommentStatus} displayRecipe={displayRecipe}/>
 
 
           <button className='btn btn-outline-light' onClick={()=>removeRecipe(displayRecipe?.id)}><i class="fa-solid fa-trash text-danger fa-2x"></i></button>
           </div>
 
+          <Modal
+        show={show2}
+        onHide={handleClose2}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title><span className='text-warning'>{displayRecipe.caption}</span></Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{color:'balck'}}>
+          {displayRecipe.description}
+        </Modal.Body>
+        <Modal.Footer>
+          
+          
+        </Modal.Footer>
+      </Modal>
 
+{displayRecipe?.Comment?
 
           <div className='mt-2 text-center ms-4'>
           <Button
@@ -58,15 +86,20 @@ function ViewCard({displayRecipe,setDeleteRecipeStatus}) {
       <div style={{ minHeight: '150px' }}>
         <Collapse in={open} dimension="width">
           <div id="example-collapse-text">
-            <Card className='mt-2' body style={{ width: '400px' ,height:'50px', marginLeft:'160px'}}>
-              Anim pariatur cliche 
+            <Card className='mt-2' body style={{ width: '400px' ,height:'50px', marginLeft:'160px',color:'green',fontWeight:'bolder'}}>
+              {displayRecipe.Comment}
+              {/* <button className='btn btn-outline-light' ><i class="fa-solid fa-trash text-danger"></i></button> */}
+
             </Card>
           </div>
         </Collapse>
         </div>
       </div>
+     
+      :
+      <p></p>
 
-
+    }
 
 
         </div>
